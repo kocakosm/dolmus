@@ -5,7 +5,7 @@ Dolmus
 Overview
 --------
 
-Dolmus is simple event bus.
+Dolmus is a very simple event bus.
 
 THIS IS A WORK IN PROGRESS...
 
