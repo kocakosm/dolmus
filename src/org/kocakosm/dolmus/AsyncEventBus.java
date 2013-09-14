@@ -16,6 +16,7 @@
 
 package org.kocakosm.dolmus;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
 public final class AsyncEventBus implements EventBus
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AsyncEventBus.class);
-	
+
 	private final HandlerRegistry registry;
 	private final ExecutorService executor;
 
@@ -76,7 +77,15 @@ public final class AsyncEventBus implements EventBus
 		@Override
 		public void run()
 		{
-			for (Handler handler : registry.getMatchingHandlers(event)) {
+			List<Handler> handlers = registry.getMatchingHandlers(event);
+			if (handlers.isEmpty()) {
+				if (event instanceof DeadEvent) {
+					LOGGER.info("Missing handler for " + event);
+				} else {
+					publish(new DeadEvent(event));
+				}
+			}
+			for (Handler handler : handlers) {
 				executor.submit(new NotificationTask(handler, event));
 			}
 		}

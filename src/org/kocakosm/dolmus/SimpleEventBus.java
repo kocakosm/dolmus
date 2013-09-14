@@ -16,6 +16,8 @@
 
 package org.kocakosm.dolmus;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +47,15 @@ public final class SimpleEventBus implements EventBus
 	@Override
 	public void publish(Object event)
 	{
-		for (Handler handler : registry.getMatchingHandlers(event)) {
+		List<Handler> handlers = registry.getMatchingHandlers(event);
+		if (handlers.isEmpty()) {
+			if (event instanceof DeadEvent) {
+				LOGGER.info("Missing handler for " + event);
+			} else {
+				publish(new DeadEvent(event));
+			}
+		}
+		for (Handler handler : handlers) {
 			try {
 				handler.handleEvent(event);
 			} catch (EventHandlerException e) {
