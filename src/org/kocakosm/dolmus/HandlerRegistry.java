@@ -19,7 +19,9 @@ package org.kocakosm.dolmus;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -46,12 +48,10 @@ final class HandlerRegistry
 				return;
 			}
 		}
-		for (Method method : listener.getClass().getDeclaredMethods()) {
-			if (method.getAnnotation(EventHandler.class) == null) {
-				continue;
-			}
+		for (Method method : getHandlerMethods(listener)) {
+			Class returnType = method.getReturnType();
 			Class[] params = method.getParameterTypes();
-			if (params.length != 1) {
+			if (returnType != Void.TYPE || params.length != 1) {
 				throw new IllegalArgumentException(
 					"Invalid EventHandler method signature");
 			}
@@ -81,6 +81,19 @@ final class HandlerRegistry
 			}
 		}
 		return infos;
+	}
+
+	private Set<Method> getHandlerMethods(Object listener)
+	{
+		Class listenerClass = listener.getClass();
+		Set<Class> classes = new HashSet<Class>();
+		classes.add(listenerClass);
+		classes.addAll(Reflection.getSuperTypes(listenerClass));
+		Set<Method> methods = new HashSet<Method>();
+		for (Class klass : classes) {
+			methods.addAll(Reflection.getAnnotatedMethods(klass, EventHandler.class));
+		}
+		return methods;
 	}
 
 	private static final class HandlerInfo
