@@ -71,16 +71,17 @@ final class HandlerRegistry
 
 	List<Handler> getMatchingHandlers(Object event)
 	{
-		List<Handler> infos = new ArrayList<Handler>();
+		List<Handler> matchingHandlers = new ArrayList<Handler>();
 		for (HandlerInfo handler : handlers) {
 			Object listener = handler.getListener();
 			if (listener == null) {
 				handlers.remove(handler);
 			} else if (handler.getEventClass().isInstance(event)) {
-				infos.add(new Handler(listener, handler.getMethod()));
+				Method method = handler.getMethod();
+				matchingHandlers.add(new Handler(listener, method));
 			}
 		}
-		return infos;
+		return matchingHandlers;
 	}
 
 	private Set<Method> getHandlerMethods(Object listener)

@@ -46,7 +46,7 @@ final class Reflection
 	{
 		Set<Method> methods = new HashSet<Method>();
 		for (Method method : klass.getDeclaredMethods()) {
-			if (method.getAnnotation(annotation) != null) {
+			if (method.isAnnotationPresent(annotation)) {
 				methods.add(method);
 			}
 		}
