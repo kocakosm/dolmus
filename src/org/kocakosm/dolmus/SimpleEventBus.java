@@ -21,12 +21,18 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Simple {@link EventBus} implementation.
+ *
+ * @author Osman KOCAK
+ */
 public final class SimpleEventBus implements EventBus
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEventBus.class);
 
 	private final HandlerRegistry registry;
 
+	/** Creates a new {@code SimpleEventBus}. */
 	public SimpleEventBus()
 	{
 		this.registry = new HandlerRegistry();

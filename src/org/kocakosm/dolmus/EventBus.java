@@ -17,15 +17,30 @@
 package org.kocakosm.dolmus;
 
 /**
- * 
- * 
+ * Event bus.
+ *
  * @author Osman KOCAK
  */
 public interface EventBus
 {
+	/**
+	 * Registers the given listener.
+	 *
+	 * @param listener the listener to register.
+	 */
 	void register(Object listener);
 
+	/**
+	 * Unregisters the given listener.
+	 *
+	 * @param listener the listener to unregister.
+	 */
 	void unregister(Object listener);
 
+	/**
+	 * Publishes the given event.
+	 *
+	 * @param event the event to publish.
+	 */
 	void publish(Object event);
 }

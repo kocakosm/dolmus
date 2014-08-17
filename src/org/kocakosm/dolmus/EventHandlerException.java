@@ -19,22 +19,33 @@ package org.kocakosm.dolmus;
 import java.lang.reflect.Method;
 
 /**
- * 
- * 
+ * This exception is used to wrap exceptions caught when calling handlers.
+ *
  * @author Osman KOCAK
  */
-public class EventHandlerException extends RuntimeException
+public final class EventHandlerException extends RuntimeException
 {
 	private static final long serialVersionUID = 1L;
 
 	private final Method method;
 
+	/**
+	 * Creates a new {@code EventHandlerException}.
+	 *
+	 * @param method the invoked handler method.
+	 * @param cause the error that caused this one.
+	 */
 	public EventHandlerException(Method method, Throwable cause)
 	{
 		super(cause);
 		this.method = method;
 	}
 
+	/**
+	 * Returns the invoked handler method.
+	 *
+	 * @return the invoked handler method.
+	 */
 	public Method getMethod()
 	{
 		return method;

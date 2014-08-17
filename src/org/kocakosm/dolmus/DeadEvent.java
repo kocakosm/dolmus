@@ -17,7 +17,8 @@
 package org.kocakosm.dolmus;
 
 /**
- * 
+ * Dead event. This kind of event is fired when no handler has been registered
+ * for a particular type of events.
  *
  * @author Osman KOCAK
  */
@@ -25,11 +26,21 @@ public final class DeadEvent
 {
 	private final Object event;
 
+	/**
+	 * Creates a new {@code DeadEvent}.
+	 *
+	 * @param event the source event.
+	 */
 	public DeadEvent(Object event)
 	{
 		this.event = event;
 	}
 
+	/**
+	 * Returns the source event.
+	 *
+	 * @return the source event.
+	 */
 	public Object getEvent()
 	{
 		return event;

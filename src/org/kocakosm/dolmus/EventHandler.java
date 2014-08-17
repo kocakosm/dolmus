@@ -22,8 +22,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 
- * 
+ * Methods annotated with this annotation explicitly declare that they can
+ * handle events of a certain type. Handler methods must return {@code void}
+ * and have exactly one argument.
+ *
  * @author Osman KOCAK
  */
 @Target(ElementType.METHOD)

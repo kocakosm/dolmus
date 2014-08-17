@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 
+ * Handler registry.
  *
  * @author Osman KOCAK
  */

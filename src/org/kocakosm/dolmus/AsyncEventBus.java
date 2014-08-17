@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Asynchronous {@link EventBus} implementation.
  *
  * @author Osman KOCAK
  */
@@ -35,12 +35,23 @@ public final class AsyncEventBus implements EventBus
 	private final HandlerRegistry registry;
 	private final ExecutorService executor;
 
+	/**
+	 * Creates a new {@code AsyncEventBus}. This method creates a thread
+	 * pool that reuses a fixed number of threads operating off a shared
+	 * unbounded queue. The number of threads in the pool is equal to the
+	 * number of available processors {@code + 1}.
+	 */
 	public AsyncEventBus()
 	{
 		this(Executors.newFixedThreadPool(
 			Runtime.getRuntime().availableProcessors() + 1));
 	}
 
+	/**
+	 * Creates a new {@code AsyncEventBus}.
+	 *
+	 * @param executor the executor to use.
+	 */
 	public AsyncEventBus(ExecutorService executor)
 	{
 		this.executor = executor;
